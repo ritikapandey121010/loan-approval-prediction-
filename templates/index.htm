@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Educational machine learning demo for loan application prediction.">
+  <title>LoanLens | Loan Prediction</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/"><span class="brand-mark">L</span> LoanLens</a>
+    <span class="top-note">AI / ML PROJECT</span>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse"></span> MACHINE LEARNING DEMO</div>
+        <h1>Understand your loan<br><span>eligibility prediction.</span></h1>
+        <p>Enter applicant information to see what a machine-learning model predicts from patterns in a sample dataset.</p>
+        <div class="hero-points">
+          <span>✓ Simple application form</span>
+          <span>✓ ML-powered prediction</span>
+          <span>✓ Instant result</span>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+        <div class="art-card">
+          <div class="art-icon">↗</div>
+          <div class="art-label">APPLICATION INSIGHT</div>
+          <div class="art-line wide"></div><div class="art-line"></div>
+          <div class="art-bottom"><span>ML MODEL</span><span class="mini-dot"></span></div>
+        </div>
+        <div class="floating-chip chip-one">◈ Applicant profile</div>
+        <div class="floating-chip chip-two">✦ Prediction ready</div>
+      </div>
+    </section>
+
+    <section class="workspace">
+      <div class="section-heading">
+        <div><p class="eyebrow dark">APPLICANT DETAILS</p><h2>Build your applicant profile</h2></div>
+        <span class="required-note">* Required fields</span>
+      </div>
+
+      {% if error %}
+      <div class="message error" role="alert">{{ error }}</div>
+      {% endif %}
+      {% if result %}
+      <div class="message result" role="status">
+        <span class="result-symbol">✦</span>
+        <div><strong>Prediction result</strong><p>{{ result }}</p><small>This is an educational model output, not a loan approval or rejection from a bank.</small></div>
+      </div>
+      {% endif %}
+
+      <form method="POST" action="/" id="loan-form">
+        <div class="form-section">
+          <div class="form-title"><span>01</span><div><h3>Personal profile</h3><p>Basic applicant information</p></div></div>
+          <div class="fields">
+            <label>Gender <b>*</b><select name="Gender" required><option value="">Select gender</option><option>Male</option><option>Female</option></select></label>
+            <label>Marital status <b>*</b><select name="Married" required><option value="">Select status</option><option>Yes</option><option>No</option></select></label>
+            <label>Dependents <b>*</b><select name="Dependents" required><option value="">Select number</option><option>0</option><option>1</option><option>2</option><option>3+</option></select></label>
+            <label>Education <b>*</b><select name="Education" required><option value="">Select education</option><option>Graduate</option><option>Not Graduate</option></select></label>
+            <label>Self-employed <b>*</b><select name="Self_Employed" required><option value="">Select option</option><option>Yes</option><option>No</option></select></label>
+            <label>Property area <b>*</b><select name="Property_Area" required><option value="">Select area</option><option>Urban</option><option>Semiurban</option><option>Rural</option></select></label>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-title"><span>02</span><div><h3>Financial information</h3><p>Use the same units as the dataset</p></div></div>
+          <div class="fields">
+            <label>Applicant monthly income <b>*</b><input name="ApplicantIncome" type="number" min="0" step="any" placeholder="e.g. 5000" required></label>
+            <label>Co-applicant monthly income <b>*</b><input name="CoapplicantIncome" type="number" min="0" step="any" value="0" required></label>
+            <label>Loan amount <b>*</b><input name="LoanAmount" type="number" min="0" step="any" placeholder="e.g. 120" required><small>Dataset units may represent thousands; confirm from your dataset.</small></label>
+            <label>Loan term (months) <b>*</b><input name="Loan_Amount_Term" type="number" min="1" step="any" value="360" required></label>
+            <label class="full">Credit history <b>*</b><select name="Credit_History" required><option value="">Select credit history</option><option value="1">Meets dataset's positive-history category (1)</option><option value="0">Does not meet positive-history category (0)</option></select><small>This field follows the dataset's coding; it is not a live credit bureau check.</small></label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <p>Your information is used only to make this prediction in the demo.</p>
+          <button type="submit">Predict application outcome <span>→</span></button>
+        </div>
+      </form>
+    </section>
+
+    <section class="how-it-works">
+      <p class="eyebrow dark">BEHIND THE RESULT</p>
+      <h2>From applicant data to prediction</h2>
+      <div class="steps">
+        <article><span>01</span><h3>Input</h3><p>Applicant details are collected through this form.</p></article>
+        <article><span>02</span><h3>Process</h3><p>Flask sends the values to a trained scikit-learn pipeline.</p></article>
+        <article><span>03</span><h3>Predict</h3><p>The model returns the class it learned from historical examples.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer><a class="brand" href="/"><span class="brand-mark">L</span> LoanLens</a><p>Student project · Educational use only</p></footer>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
